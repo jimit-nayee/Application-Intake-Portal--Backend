@@ -31,6 +31,7 @@ public interface CustomerService {
 	void deleteCustomer(String email);
 	public Customer updateCustomer(Customer customer);
 	public List<CustomerForApprovement> getCustomerForApprovement();
+	List<CustomerForApprovement> getListOfCutomerForReview();
 	
 //	void updateCustomer(Customer customer);
 }

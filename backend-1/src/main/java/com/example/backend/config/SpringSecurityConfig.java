@@ -78,7 +78,7 @@ public class SpringSecurityConfig {
 
 				.and()
 				.csrf((csrf) -> csrf
-			            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer")
+			            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer","/retrieveFile2")
 			            .csrfTokenRequestHandler(requestHandler))
 
 //				.csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
@@ -90,7 +90,7 @@ public class SpringSecurityConfig {
 				
 				.authorizeHttpRequests() 
 //				.requestMatchers("/getCustomersList").hasRole("ADMIN")
-				.requestMatchers("/user", "/register", "/csrf").permitAll()
+				.requestMatchers("/user", "/register", "/csrf","/retrieveFile2").permitAll()
 				.anyRequest().authenticated()
 				
 

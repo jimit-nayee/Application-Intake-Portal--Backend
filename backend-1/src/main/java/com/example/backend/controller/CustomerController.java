@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,21 +46,24 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/retrieveFile2")
-	public Binary downloadFile2(@RequestParam String username) throws IOException {
-		Binary data = cr.findByEmail(username).get(0).getPdf();
+	public Binary downloadFile2(@RequestParam String email) throws IOException {
+		System.out.println("retriving");
+		Binary data = cr.findByEmail(email).get(0).getPdf();
 		String pdf = data.toString().substring(16);
 		System.out.println(pdf);
-		return cr.findByEmail(username).get(0).getPdf();
+		return cr.findByEmail(email).get(0).getPdf();
 	}
 
 	@RequestMapping("/validateCustomer")
 	public Map<String, String> validateCustomer(@RequestBody Map<String, Object> requestParams) {
+		System.out.println("hello validate code......");
 		return customerService.validateCustomer(requestParams);
 
 	}
 
 	@RequestMapping("/registerCustomer")
 	public Map<String, String> registerCustomer(@RequestBody Map<String, Object> requestParams) {
+		
 		return customerService.registerCustomer(requestParams);
 	}
 
@@ -90,9 +94,16 @@ public class CustomerController {
 		return new ResponseEntity<String>("Customer updated succesfully", HttpStatus.OK);
 	}
 
-	@RequestMapping("/getCustomersListForAgent")
-	public List<CustomerForApprovement> getAllCustomersForAgent(String email) {
+	@GetMapping("/getCustomersListForAgent/{email}")
+	public List<CustomerForApprovement> getAllCustomersForAgent(@PathVariable String email) {
+		System.out.println(customerService.getCustomerListForAgent(email));
 		return customerService.getCustomerListForAgent(email);
+	}
+	
+	@GetMapping("/getListOfCutomerForReview")
+	public List<CustomerForApprovement> getListOfCutomerForReview() {
+//		System.out.println(customerService.getCustomerListForAgent(email));
+		return customerService.getListOfCutomerForReview();
 	}
 
 }

@@ -56,12 +56,16 @@ public class CustomerServiceImplementation implements CustomerService{
 		InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
 		return ResponseEntity.ok().headers(headers).body(inputStreamResource);
 	}
+	
 	@Override
 	public Map<String, String> validateCustomer(@RequestBody Map<String, Object> requestParams) {
 		HashMap<String, String> map = new HashMap<>();
+	
+		
 
 		String email = (String) requestParams.get("email");
 		System.out.println(email);
+		System.out.println("method called");
 		String fname = (String) requestParams.get("fname");
 		String lname = (String) requestParams.get("lname");
 		String city = (String) requestParams.get("city");
@@ -170,14 +174,20 @@ public class CustomerServiceImplementation implements CustomerService{
 //	}
 
 	public List<CustomerForApprovement> getCustomerListForAgent(String email) {
-		// TODO Auto-generated method stub
-		return customerForApprovementRepo.findByAddedBy(email);
+		// TODO Auto-generated method stub		
+		return customerForApprovementRepo.findByEmail(email);
 	}
 	
 	public Customer updateCustomer(Customer customer) {
 		return custRepo.save(customer);
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<CustomerForApprovement> getListOfCutomerForReview() {
+		// TODO Auto-generated method stub
+		return customerForApprovementRepo.findAll();
 	}
 
 }
