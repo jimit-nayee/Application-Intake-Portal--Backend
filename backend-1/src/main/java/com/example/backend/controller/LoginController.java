@@ -22,6 +22,7 @@ import com.example.backend.model.User;
 import com.example.backend.repo.UserRepo;
 import com.example.backend.service.JWTService;
 import com.example.backend.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 public class LoginController {
@@ -48,7 +49,7 @@ public class LoginController {
 			Authentication auth = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
 
-			return new ResponseEntity<String>(jwtService.generateToken(user.getEmail()), HttpStatus.OK);
+			return new ResponseEntity<String>(jwtService.generateToken(user.getEmail()) , HttpStatus.OK);
 		} else {
 			throw new UserNotFoundCustomeException();
 		}

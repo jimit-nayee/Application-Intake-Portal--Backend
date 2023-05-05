@@ -187,7 +187,7 @@ public class CustomerServiceImplementation implements CustomerService{
 	@Override
 	public List<CustomerForApprovement> getListOfCutomerForReview() {
 		// TODO Auto-generated method stub
-		return customerForApprovementRepo.findAll();
+		return customerForApprovementRepo.findAllWihoutPdf();
 	}
 
 }

@@ -9,11 +9,18 @@ import com.example.backend.model.Customer;
 import com.example.backend.model.CustomerForApprovement;
 
 public interface CustomerForApprovementRepo extends MongoRepository<CustomerForApprovement, String> {
+	 
 	
-	 List<CustomerForApprovement> findByEmail(String email);
 
+	 List<CustomerForApprovement> findByEmail(String email);
+	 
+	 @Query(value = "{}", fields = "{ 'pdf' : 0 }")
+	 List<CustomerForApprovement> findAllWihoutPdf();  
+  
 	 @Query(value="{ 'addedBy' : ?0 }", fields="{ 'pdf' : 0}")
 	List<CustomerForApprovement> findByAddedBy(String email);
+	 
+	
 }
  
 
