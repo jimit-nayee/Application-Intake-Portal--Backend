@@ -18,6 +18,15 @@ public class User {
 	private String role;
 	private String mono;
 	private String password;
+	private int is_approved;
+
+	public int getIs_approved() {
+		return is_approved;
+	}
+
+	public void setIs_approved(int is_approved) {
+		this.is_approved = is_approved;
+	}
 
 	public User() {
 		super();
@@ -31,13 +40,14 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String id, String email, String role, String mono, String password) {
+	public User(String id, String email, String role, String mono, String password,int is_approved) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.role = role;
 		this.mono = mono;
 		this.password = password;
+		this.is_approved=is_approved;
 	}
 
 	public String getId() {
@@ -82,8 +92,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "UserModel [id=" + id + ", email=" + email + ", role=" + role + ", mono=" + mono + ", password="
-				+ password + "]";
+		return "User [id=" + id + ", email=" + email + ", role=" + role + ", mono=" + mono + ", password=" + password
+				+ ", is_approved=" + is_approved + "]";
 	}
+
+
 
 }

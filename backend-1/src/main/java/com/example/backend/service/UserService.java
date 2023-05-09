@@ -8,5 +8,6 @@ public interface UserService {
 	public String login(User user);
 	public List<User> getAllUsers();
 	String deleteByEmail(String email);
+	String updateByEmail(String email);
 	
 }

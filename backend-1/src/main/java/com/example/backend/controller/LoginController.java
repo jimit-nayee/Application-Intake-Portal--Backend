@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.Exceptions.UserNotFoundCustomeException;
 import com.example.backend.model.User;
@@ -46,6 +47,7 @@ public class LoginController {
 	public ResponseEntity<String> loginUser(@RequestBody User user) throws UserNotFoundCustomeException {
 
 		if (ur.findByEmail(user.getEmail()).isPresent()) {
+//			System.out.println(user);
 			Authentication auth = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
 
@@ -57,11 +59,13 @@ public class LoginController {
 
 	@PostMapping("/register")
 	public User register(@RequestBody User user) {
-
+		System.out.println(user);
 		String hashPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(hashPassword);
 		return ur.save(user);
 	}
+	
+	
 
 	@GetMapping("/getAll")
 	public List<User> getAllUser() {
@@ -75,7 +79,13 @@ public class LoginController {
 	
 	@PostMapping("/delete")
 	public String deleteByUsername(@RequestBody User user) {
-//        System.out.println(user);
+        System.out.println(user);
 		return userService.deleteByEmail(user.getEmail());
+	}
+	
+	@PostMapping("/isApprove")
+	public String isApprove(@RequestBody User user) {
+		userService.updateByEmail(user.getEmail());
+		return "status updated";
 	}
 }

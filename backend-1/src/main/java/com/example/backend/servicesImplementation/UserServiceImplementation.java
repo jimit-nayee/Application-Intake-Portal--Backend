@@ -47,6 +47,11 @@ public class UserServiceImplementation implements UserService {
 		
 		return ur.findAll();
 	}
-	
+
+	@Override
+	public String updateByEmail(String email) {
+        ur.updateIsApproved(email, 1);
+        return "updated";
+    }
 
 }
