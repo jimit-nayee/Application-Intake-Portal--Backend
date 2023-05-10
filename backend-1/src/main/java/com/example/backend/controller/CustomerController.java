@@ -96,7 +96,9 @@ public class CustomerController {
 
 	@GetMapping("/getCustomersListForAgent/{email}")
 	public List<CustomerForApprovement> getAllCustomersForAgent(@PathVariable String email) {
+		System.out.println(email);
 		System.out.println(customerService.getCustomerListForAgent(email));
+//		System.out.println(customerService.getCustomerListForAgent(email));
 		return customerService.getCustomerListForAgent(email);
 	}
 	

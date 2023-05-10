@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.backend.Exceptions.UserNotApprovedCustomException;
 import com.example.backend.Exceptions.UserNotFoundCustomeException;
 import com.example.backend.model.User;
 import com.example.backend.repo.UserRepo;
@@ -36,7 +38,7 @@ public class LoginController {
 
 	@Autowired
 	UserRepo ur;
-	
+
 	@Autowired
 	UserService userService;
 
@@ -44,17 +46,25 @@ public class LoginController {
 	JWTService jwtService;
 
 	@PostMapping("/user")
-	public ResponseEntity<String> loginUser(@RequestBody User user) throws UserNotFoundCustomeException {
+	public ResponseEntity<String> loginUser(@RequestBody User user)
+			throws UserNotFoundCustomeException, UserNotApprovedCustomException {
 
 		if (ur.findByEmail(user.getEmail()).isPresent()) {
 //			System.out.println(user);
-			Authentication auth = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-
-			return new ResponseEntity<String>(jwtService.generateToken(user.getEmail()) , HttpStatus.OK);
-		} else {
+			User u = ur.findByEmail(user.getEmail()).get();
+			if (u.getIs_approved() == 1) {
+				try {
+					Authentication auth = authenticationManager
+							.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+				} catch (Exception e) {
+					return new ResponseEntity<String>("Authentication Failed", HttpStatus.UNAUTHORIZED);
+				}
+				return new ResponseEntity<String>(jwtService.generateToken(user.getEmail()), HttpStatus.OK);
+			} else
+				throw new UserNotApprovedCustomException();
+		} else
 			throw new UserNotFoundCustomeException();
-		}
+
 	}
 
 	@PostMapping("/register")
@@ -64,25 +74,23 @@ public class LoginController {
 		user.setPassword(hashPassword);
 		return ur.save(user);
 	}
-	
-	
 
 	@GetMapping("/getAll")
 	public List<User> getAllUser() {
 		return ur.findAll();
 	}
-	
+
 	@GetMapping("/getAllEmployees")
 	public List<User> getEmployeeList() {
 		return userService.getAllUsers();
 	}
-	
+
 	@PostMapping("/delete")
 	public String deleteByUsername(@RequestBody User user) {
-        System.out.println(user);
+		System.out.println(user);
 		return userService.deleteByEmail(user.getEmail());
 	}
-	
+
 	@PostMapping("/isApprove")
 	public String isApprove(@RequestBody User user) {
 		userService.updateByEmail(user.getEmail());

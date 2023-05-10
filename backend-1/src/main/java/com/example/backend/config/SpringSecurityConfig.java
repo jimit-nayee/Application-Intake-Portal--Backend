@@ -77,15 +77,17 @@ public class SpringSecurityConfig {
 		})
 
 				.and()
-				.csrf((csrf) -> csrf
-			            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer","/retrieveFile2")
-			            .csrfTokenRequestHandler(requestHandler))
+//				.csrf((csrf) -> csrf
+//			            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer","/retrieveFile2")
+//			            .csrfTokenRequestHandler(requestHandler))
+				
+				.csrf().disable()
 
 //				.csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
 //						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer")
 //						.csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
 
-				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+//				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new JWTTTokenValidation(), BasicAuthenticationFilter.class)
 				
 				.authorizeHttpRequests() 
