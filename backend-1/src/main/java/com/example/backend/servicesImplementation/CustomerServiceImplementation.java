@@ -190,4 +190,10 @@ public class CustomerServiceImplementation implements CustomerService{
 		return customerForApprovementRepo.findAllWihoutPdf();
 	}
 
+	public void reviewDoneBy(String email) {
+		// TODO Auto-generated method stub
+		
+	   customerForApprovementRepo.reviewDoneBy(email);
+	}
+
 }

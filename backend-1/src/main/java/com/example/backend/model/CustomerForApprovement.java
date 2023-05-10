@@ -19,11 +19,21 @@ public class CustomerForApprovement {
 	private String state;
 	private String approvementStatus; // 0->disapproved, 1->Approved, 2->Pending
 	private String addedBy;
+	private int is_customer_approved;
 	@Transient
 	private Binary pdf;
 
+
+	public int getIs_customer_approved() {
+		return is_customer_approved;
+	}
+
+	public void setIs_customer_approved(int is_customer_approved) {
+		this.is_customer_approved = is_customer_approved;
+	}
+
 	public CustomerForApprovement(String email, String fname, String lname, String address, String city, String state,
-			String approvementStatus, String addedBy, Binary pdf) {
+			String approvementStatus, String addedBy, int is_customer_approved, Binary pdf) {
 		super();
 		this.email = email;
 		this.fname = fname;
@@ -33,6 +43,7 @@ public class CustomerForApprovement {
 		this.state = state;
 		this.approvementStatus = approvementStatus;
 		this.addedBy = addedBy;
+		this.is_customer_approved = is_customer_approved;
 		this.pdf = pdf;
 	}
 

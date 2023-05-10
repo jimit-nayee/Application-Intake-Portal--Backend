@@ -107,5 +107,11 @@ public class CustomerController {
 //		System.out.println(customerService.getCustomerListForAgent(email));
 		return customerService.getListOfCutomerForReview();
 	}
+	
+//	@GetMapping("/reviewDoneBy/{email}")
+//	public List<CustomerForApprovement> reviewDoneBy(@PathVariable String email ) {
+////		System.out.println(customerService.getCustomerListForAgent(email));
+//		return customerService.reviewDoneBy(email);
+//	}
 
 }

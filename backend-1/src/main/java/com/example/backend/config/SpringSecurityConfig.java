@@ -81,17 +81,18 @@ public class SpringSecurityConfig {
 //			            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer","/retrieveFile2")
 //			            .csrfTokenRequestHandler(requestHandler))
 				
-				.csrf().disable()
+//				.csrf().disable()
 
-//				.csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
-//						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer")
-//						.csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
+				.csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/validateCustomer")
+						.csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
 
 //				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new JWTTTokenValidation(), BasicAuthenticationFilter.class)
 				
 				.authorizeHttpRequests() 
-//				.requestMatchers("/getCustomersList").hasRole("ADMIN")
+//				.requestMatchers("/getCustomersList").hasRole("AGENT")
+//				.requestMatchers("/getListOfCutomerForReview").hasAnyRole("REVIEWER","ADMIN")
 				.requestMatchers("/user", "/register", "/csrf","/retrieveFile2").permitAll()
 				.anyRequest().authenticated()
 				
