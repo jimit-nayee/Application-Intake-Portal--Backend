@@ -1,7 +1,9 @@
-package com.example.backend.model;
+package com.example.backend.dto;
 
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
+
 import org.bson.types.Binary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,12 +13,9 @@ import com.example.backend.dto.ApprovedCustomer;
 import jakarta.persistence.Id;
 import org.springframework.data.annotation.Transient;
 
-
-@Document
 @Component
-public class CustomerForApprovement {
+public class CustomerForApprovementDto implements Serializable {
 	@Id
-	@Indexed(unique = true)
 	private String email;
 	private String fname;
 	private String lname;
@@ -28,9 +27,8 @@ public class CustomerForApprovement {
 //	private ApprovedCustomer approvedCustomer;
 	private String pdfName;
 
-	@Transient
 	MultipartFile pdf;
-	
+
 	public String getPdfName() {
 		return pdfName;
 	}
@@ -40,16 +38,12 @@ public class CustomerForApprovement {
 	}
 
 	String reviewerEmail;
-	
-	private Binary signedPdf;
 
+	private MultipartFile signedPdf;
 
-
-
-
-
-	public CustomerForApprovement(String email, String fname, String lname, String address, String city, String state,
-			String approvementStatus, String addedBy, MultipartFile pdf, String reviewerEmail, Binary signedPdf) {
+	public CustomerForApprovementDto(String email, String fname, String lname, String address, String city,
+			String state, String approvementStatus, String addedBy, MultipartFile pdf, String reviewerEmail,
+			MultipartFile signedPdf) {
 		super();
 		this.email = email;
 		this.fname = fname;
@@ -64,7 +58,7 @@ public class CustomerForApprovement {
 		this.signedPdf = signedPdf;
 	}
 
-	public CustomerForApprovement() {
+	public CustomerForApprovementDto() {
 		super();
 	}
 
@@ -156,17 +150,12 @@ public class CustomerForApprovement {
 		this.reviewerEmail = reviewerEmail;
 	}
 
-	public Binary getSignedPdf() {
+	public MultipartFile getSignedPdf() {
 		return signedPdf;
 	}
 
-	public void setSignedPdf(Binary signedPdf) {
+	public void setSignedPdf(MultipartFile signedPdf) {
 		this.signedPdf = signedPdf;
 	}
-
-
-
-
-
 
 }

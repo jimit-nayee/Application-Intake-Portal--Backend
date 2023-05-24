@@ -1,20 +1,29 @@
 package com.example.backend.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Id;
+import org.springframework.data.annotation.Transient;
+
+
 
 @Document
 @Component
 public class Customer {
 	@Id
-	String email;
-	String fname;
-	String lname;
-	String address;
-	String city;
-	String state;
+	 @Indexed(unique = true)
+	private String email;
+	private String fname;
+	private String lname;
+	private String address;
+ private 	String city;
+	private String state;
 	
+	
+
 	public Customer() {
 		super();
 	}
